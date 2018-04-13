@@ -14,7 +14,7 @@ import pandas as pd
 import pickle
 import numpy as np
 TPS_DIR = '../data/yelp'
-TP_file = os.path.join(TPS_DIR, 'review.json')
+TP_file = os.path.join(TPS_DIR, 'restaurant_review.json')
 
 f= open(TP_file)
 users_id=[]
@@ -23,8 +23,8 @@ ratings=[]
 reviews=[]
 np.random.seed(2017)
 
-for line in f:
-    print line
+for index, line in enumerate(f):
+    print index 
 
     js=json.loads(line)
     if str(js['user_id'])=='unknown':

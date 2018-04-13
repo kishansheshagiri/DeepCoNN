@@ -20,9 +20,9 @@ import pickle
 import DeepCoNN
 
 tf.flags.DEFINE_string("word2vec", "../data/google.bin", "Word2vec file with pre-trained embeddings (default: None)")
-tf.flags.DEFINE_string("valid_data","../data/music/music.valid", " Data for validation")
-tf.flags.DEFINE_string("para_data", "../data/music/music.para", "Data parameters")
-tf.flags.DEFINE_string("train_data", "../data/music/music.train", "Data for training")
+tf.flags.DEFINE_string("valid_data","../data/yelp/yelp.valid", " Data for validation")
+tf.flags.DEFINE_string("para_data", "../data/yelp/yelp.para", "Data parameters")
+tf.flags.DEFINE_string("train_data", "../data/yelp/yelp.train", "Data for training")
 
 # ==================================================
 
@@ -35,7 +35,7 @@ tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability ")
 tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularizaion lambda")
 tf.flags.DEFINE_float("l2_reg_V", 0, "L2 regularizaion V")
 # Training parameters
-tf.flags.DEFINE_integer("batch_size",100, "Batch Size ")
+tf.flags.DEFINE_integer("batch_size",8, "Batch Size ")
 tf.flags.DEFINE_integer("num_epochs", 40, "Number of training epochs ")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after this many steps ")
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps ")
@@ -88,7 +88,7 @@ def dev_step(u_batch, i_batch, uid, iid, y_batch, writer=None):
 
 if __name__ == '__main__':
     FLAGS = tf.flags.FLAGS
-    FLAGS._parse_flags()
+    #FLAGS._parse_flags()
     print("\nParameters:")
     for attr, value in sorted(FLAGS.__flags.items()):
         print("{}={}".format(attr.upper(), value))
@@ -158,7 +158,7 @@ if __name__ == '__main__':
                     header = f.readline()
                     vocab_size, layer1_size = map(int, header.split())
                     binary_len = np.dtype('float32').itemsize * layer1_size
-                    for line in xrange(vocab_size):
+                    for line in range(vocab_size):
                         word = []
                         while True:
                             ch = f.read(1)
@@ -205,7 +205,7 @@ if __name__ == '__main__':
                 sess.run(deep.W2.assign(initW))
 
             l = (train_length / FLAGS.batch_size) + 1
-            print l
+            print(l)
             ll = 0
             epoch = 1
             best_mae = 5
@@ -228,7 +228,7 @@ if __name__ == '__main__':
 
             data_size_train = len(train_data)
             data_size_test = len(test_data)
-            batch_size = 100
+            batch_size = 8
             ll = int(len(train_data) / batch_size)
 
             for epoch in range(40):
@@ -257,7 +257,7 @@ if __name__ == '__main__':
 
                     if batch_num % 1000 == 0 and batch_num > 1:
                         print("\nEvaluation:")
-                        print batch_num
+                        print(batch_num)
                         loss_s = 0
                         accuracy_s = 0
                         mae_s = 0
@@ -287,9 +287,9 @@ if __name__ == '__main__':
                                                                                              accuracy_s / test_length),
                                                                                          mae_s / test_length))
 
-                print str(epoch) + ':\n'
+                print(str(epoch) + ':\n')
                 print("\nEvaluation:")
-                print "train:rmse,mae:", train_rmse / ll, train_mae / ll
+                print("train:rmse,mae:", train_rmse / ll, train_mae / ll)
                 train_rmse = 0
                 train_mae = 0
 
@@ -326,7 +326,7 @@ if __name__ == '__main__':
                 if best_mae > mae:
                     best_mae = mae
                 print("")
-            print 'best rmse:', best_rmse
-            print 'best mae:', best_mae
+            print('best rmse:', best_rmse)
+            print('best mae:', best_mae)
 
-    print 'end'
+    print('end')
