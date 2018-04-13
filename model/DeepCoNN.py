@@ -18,7 +18,8 @@ class DeepCoNN(object):
     def __init__(
             self, user_length,item_length, num_classes, user_vocab_size,item_vocab_size,fm_k,n_latent,user_num,item_num,
             embedding_size, filter_sizes, num_filters, l2_reg_lambda=0.0,l2_reg_V=0.0):
-        self.input_u = tf.placeholder(tf.int32, [None, user_length], name="input_u")
+        # A placeholder is simply a variable that we will assign data to at a later date. It allows us to create our operations and build our computation graph, without needing the data.
+	self.input_u = tf.placeholder(tf.int32, [None, user_length], name="input_u")
         self.input_i = tf.placeholder(tf.int32, [None, item_length], name="input_i")
         self.input_y = tf.placeholder(tf.float32, [None,1],name="input_y")
         self.input_uid = tf.placeholder(tf.int32, [None, 1], name="input_uid")
@@ -27,6 +28,7 @@ class DeepCoNN(object):
 
         l2_loss = tf.constant(0.0)
 
+	# name_scope is used for selecting a graph
         with tf.name_scope("user_embedding"):
             self.W1 = tf.Variable(
                 tf.random_uniform([user_vocab_size, embedding_size], -1.0, 1.0),
@@ -38,6 +40,9 @@ class DeepCoNN(object):
             self.W2 = tf.Variable(
                 tf.random_uniform([item_vocab_size, embedding_size], -1.0, 1.0),
                 name="W")
+
+
+
             self.embedded_item = tf.nn.embedding_lookup(self.W2, self.input_i)
             self.embedded_items = tf.expand_dims(self.embedded_item, -1)
 
@@ -97,9 +102,11 @@ class DeepCoNN(object):
         self.h_pool_i = tf.concat(pooled_outputs_i, 3)
         self.h_pool_flat_i = tf.reshape(self.h_pool_i, [-1, num_filters_total])
 
+	# did not understand what they are using dropout for
         with tf.name_scope("dropout"):
             self.h_drop_u = tf.nn.dropout(self.h_pool_flat_u, 1.0)
             self.h_drop_i= tf.nn.dropout(self.h_pool_flat_i, 1.0)
+	# assuming this is for 
         with tf.name_scope("get_fea"):
             Wu = tf.get_variable(
                 "Wu",
@@ -116,7 +123,8 @@ class DeepCoNN(object):
             self.i_fea = tf.matmul(self.h_drop_i, Wi) + bi
             #self.i_fea=tf.nn.dropout(self.i_fea,self.dropout_keep_prob)
 
-         
+        
+	# this is factorization matrix method used for shared layer
         with tf.name_scope('fm'):
             self.z=tf.nn.relu(tf.concat([self.u_fea,self.i_fea], 1))
 

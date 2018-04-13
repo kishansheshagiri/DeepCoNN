@@ -133,6 +133,8 @@ class DeepCoNN(object):
             #self.i_feas=tf.nn.relu(self.i_feas)
             #self.u_feas=tf.nn.dropout(self.u_feas,self.dropout_keep_prob)
             #self.i_feas=tf.nn.dropout(self.i_feas,self.dropout_keep_prob)
+
+	# used in the place of factorization matrix (FM) method of DeepCoNN
         with tf.name_scope('ncf'):
 
             self.FM = tf.multiply(self.u_feas, self.i_feas)

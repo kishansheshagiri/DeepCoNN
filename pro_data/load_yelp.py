@@ -127,6 +127,7 @@ for i in data.values:
         item_reviews[i[1]] = [i[3]]
         item_rid[i[1]]=[i[0]]
 print item_reviews[11]
+#storing the files in respective files
 pickle.dump(user_reviews, open(os.path.join(TPS_DIR, 'user_review'), 'wb'))
 pickle.dump(item_reviews, open(os.path.join(TPS_DIR, 'item_review'), 'wb'))
 pickle.dump(user_rid, open(os.path.join(TPS_DIR, 'user_rid'), 'wb'))
