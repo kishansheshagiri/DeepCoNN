@@ -19,7 +19,7 @@ class DeepCoNN(object):
             self, user_length,item_length, num_classes, user_vocab_size,item_vocab_size,fm_k,n_latent,user_num,item_num,
             embedding_size, filter_sizes, num_filters, l2_reg_lambda=0.0,l2_reg_V=0.0):
         # A placeholder is simply a variable that we will assign data to at a later date. It allows us to create our operations and build our computation graph, without needing the data.
-	self.input_u = tf.placeholder(tf.int32, [None, user_length], name="input_u")
+        self.input_u = tf.placeholder(tf.int32, [None, user_length], name="input_u")
         self.input_i = tf.placeholder(tf.int32, [None, item_length], name="input_i")
         self.input_y = tf.placeholder(tf.float32, [None,1],name="input_y")
         self.input_uid = tf.placeholder(tf.int32, [None, 1], name="input_uid")

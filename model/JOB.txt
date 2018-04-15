@@ -1,0 +1,14 @@
+##NECESSARY JOB SpECIFICATIONS
+#BSUB -J JobExample1
+#BSUB -L /bin/bash
+#BSUB -W 3:00
+#BSUB -n 1
+#BSUB -R "span[ptile=1]"
+#BSUB -R "rusage[mem=150000]"
+#BSuB -M 150000
+#BSUB -o Example1Out.%J
+
+cd $SCRATCH
+cd RecCoNN/model/
+source activate py27670
+python train.py

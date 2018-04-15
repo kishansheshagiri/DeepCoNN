@@ -24,14 +24,14 @@ reviews=[]
 np.random.seed(2017)
 
 for index, line in enumerate(f):
-    print index 
+    #print(index) 
 
     js=json.loads(line)
     if str(js['user_id'])=='unknown':
-        print "unknown"
+        print("unknown")
         continue
     if str(js['business_id'])=='unknown':
-        print "unknown2"
+        print("unknown2")
         continue
 
     reviews.append(js['text'])
@@ -67,24 +67,29 @@ def filter_triplets(tp, min_uc=MIN_USER_COUNT, min_sc=MIN_SONG_COUNT):
     return tp, usercount, songcount
 
 data,usercount, itemcount=filter_triplets(data)
+print(data.values)
 #usercount, itemcount = get_count(data, 'user_id'), get_count(data, 'item_id')
 
-print data.shape[0]
-print usercount.shape[0]
-print itemcount.shape[0]
+print(data.shape[0])
+print(usercount.shape[0])
+print(itemcount.shape[0])
 
 unique_uid = usercount.index
 unique_sid = itemcount.index
 item2id = dict((sid, i) for (i, sid) in enumerate(unique_sid))
 user2id = dict((uid, i) for (i, uid) in enumerate(unique_uid))
+#print(item2id)
 def numerize(tp):
     uid = map(lambda x: user2id[x], tp['user_id'])
     sid = map(lambda x: item2id[x], tp['item_id'])
     tp['user_id'] = uid
     tp['item_id'] = sid
+    #print(sid)
     return tp
 
+#print(data.values)
 data=numerize(data)
+#print(data.values)
 tp_rating=data[['user_id','item_id','ratings']]
 
 
@@ -113,20 +118,32 @@ user_reviews={}
 item_reviews={}
 user_rid={}
 item_rid={}
+#print(type(data))
+iter=0
 for i in data.values:
-    if user_reviews.has_key(i[0]):
+    print(iter)
+    print("Data")
+    print(len(data))
+    if i[0] in user_reviews.keys():
         user_reviews[i[0]].append(i[3])
         user_rid[i[0]].append(i[1])
     else:
         user_rid[i[0]]=[i[1]]
         user_reviews[i[0]]=[i[3]]
-    if item_reviews.has_key(i[1]):
+    if i[1] in item_reviews.keys():
         item_reviews[i[1]].append(i[3])
         item_rid[i[1]].append(i[0])
     else:
         item_reviews[i[1]] = [i[3]]
         item_rid[i[1]]=[i[0]]
-print item_reviews[11]
+    iter += 1
+#print(data.values)
+#print("Item review keys")
+for i in item_reviews.keys():
+        print(i)
+print(item_reviews[11])
+#print(data.values)
+#print(len(data.values))
 #storing the files in respective files
 pickle.dump(user_reviews, open(os.path.join(TPS_DIR, 'user_review'), 'wb'))
 pickle.dump(item_reviews, open(os.path.join(TPS_DIR, 'item_review'), 'wb'))
@@ -136,6 +153,6 @@ pickle.dump(item_rid, open(os.path.join(TPS_DIR, 'item_rid'), 'wb'))
 usercount, itemcount = get_count(data, 'user_id'), get_count(data, 'item_id')
 
 
-print np.sort(np.array(usercount.values))
+print(np.sort(np.array(usercount.values)))
 
-print np.sort(np.array(itemcount.values))
+print(np.sort(np.array(itemcount.values)))

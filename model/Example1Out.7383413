@@ -1,0 +1,54 @@
+
+Parameters:
+
+Loading data...
+Traceback (most recent call last):
+  File "train.py", line 101, in <module>
+    para = pickle.load(pkl_file)
+UnicodeDecodeError: 'ascii' codec can't decode byte 0x85 in position 0: ordinal not in range(128)
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@gpu256-3009>
+Subject: Job 7383413: <JobExample1> in cluster <Main_Compute> Exited
+
+Job <JobExample1> was submitted from host <login3> by user <manamakhilbabu> in cluster <Main_Compute>.
+Job was executed on host(s) <gpu256-3009>, in queue <sn_regular>, as user <manamakhilbabu> in cluster <Main_Compute>.
+</home/manamakhilbabu> was used as the home directory.
+</scratch/user/manamakhilbabu/RecCoNN/model> was used as the working directory.
+Started at Sun Apr 15 02:35:53 2018
+Results reported on Sun Apr 15 02:36:45 2018
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+##NECESSARY JOB SpECIFICATIONS
+#BSUB -J JobExample1
+#BSUB -L /bin/bash
+#BSUB -W 2:00
+#BSUB -n 1
+#BSUB -R "span[ptile=1]"
+#BSUB -R "rusage[mem=150000]"
+#BSuB -M 150000
+#BSUB -o Example1Out.%J
+
+cd $SCRATCH
+cd RecCoNN/model/
+python train.py
+
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   4.16 sec.
+    Max Memory :                                 216 MB
+    Average Memory :                             92.62 MB
+    Total Requested Memory :                     150000.00 MB
+    Delta Memory :                               149784.00 MB
+    Max Processes :                              4
+    Max Threads :                                5
+
+The output (if any) is above this job summary.
+

@@ -19,8 +19,8 @@ import datetime
 import pickle
 import DeepCoNN
 
-tf.flags.DEFINE_string("word2vec", "../data/google.bin", "Word2vec file with pre-trained embeddings (default: None)")
-tf.flags.DEFINE_string("valid_data","../data/yelp/yelp.valid", " Data for validation")
+tf.flags.DEFINE_string("word2vec", "../data/glove.6B.100d.txt", "Word2vec file with pre-trained embeddings (default: None)")
+tf.flags.DEFINE_string("valid_data","../data/yelp/yelp.test", " Data for validation")
 tf.flags.DEFINE_string("para_data", "../data/yelp/yelp.para", "Data parameters")
 tf.flags.DEFINE_string("train_data", "../data/yelp/yelp.train", "Data for training")
 
@@ -28,7 +28,7 @@ tf.flags.DEFINE_string("train_data", "../data/yelp/yelp.train", "Data for traini
 
 # Model Hyperparameters
 #tf.flags.DEFINE_string("word2vec", "./data/rt-polaritydata/google.bin", "Word2vec file with pre-trained embeddings (default: None)")
-tf.flags.DEFINE_integer("embedding_dim", 300, "Dimensionality of character embedding ")
+tf.flags.DEFINE_integer("embedding_dim", 100, "Dimensionality of character embedding ")
 tf.flags.DEFINE_string("filter_sizes", "3", "Comma-separated filter sizes ")
 tf.flags.DEFINE_integer("num_filters", 100, "Number of filters per filter size")
 tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability ")
@@ -154,53 +154,73 @@ if __name__ == '__main__':
                 initW = np.random.uniform(-1.0, 1.0, (len(vocabulary_user), FLAGS.embedding_dim))
                 # load any vectors from the word2vec
                 print("Load word2vec u file {}\n".format(FLAGS.word2vec))
-                with open(FLAGS.word2vec, "rb") as f:
-                    header = f.readline()
-                    vocab_size, layer1_size = map(int, header.split())
-                    binary_len = np.dtype('float32').itemsize * layer1_size
-                    for line in range(vocab_size):
-                        word = []
-                        while True:
-                            ch = f.read(1)
-                            if ch == ' ':
-                                word = ''.join(word)
-                                break
-                            if ch != '\n':
-                                word.append(ch)
-                        idx = 0
-
-                        if word in vocabulary_user:
-                            u = u + 1
-                            idx = vocabulary_user[word]
-                            initW[idx] = np.fromstring(f.read(binary_len), dtype='float32')
-                        else:
-                            f.read(binary_len)
+                with open(FLAGS.word2vec, "r") as f:
+                    for line in f:
+                         word_and_vec = line.split(' ')
+                         idx = 0
+                         if word_and_vec[0] in vocabulary_user:
+                             #print(u)
+                             u += 1
+                             idx = vocabulary_user[word_and_vec[0]]
+                             initW[idx] = np.asarray(word_and_vec[1:]) 
+                    #print('Opened')
+                    #header = f.readline()
+                    #vocab_size, layer1_size = map(int, header.split())
+                    #binary_len = np.dtype('float32').itemsize * layer1_size
+                    #print('Completed')
+                    #for line in range(vocab_size):
+                    #    print('Started loop')
+                    #    word = []
+                    #    while True:
+                    #        ch = f.read(1)
+                    #        if ch == ' ':
+                    #            word = ''.join(word)
+                    #            break
+                    #        if ch != '\n':
+                    #            word.append(ch)
+                    #    idx = 0
+                    #    print("Completed a loop")
+                    #    if word in vocabulary_user:
+                    #        print(u)
+                    #        u = u + 1
+                    #        idx = vocabulary_user[word]
+                    #        initW[idx] = np.fromstring(f.read(binary_len), dtype='float32')
+                    #    else:
+                    #        f.read(binary_len)
                 sess.run(deep.W1.assign(initW))
                 initW = np.random.uniform(-1.0, 1.0, (len(vocabulary_item), FLAGS.embedding_dim))
                 # load any vectors from the word2vec
                 print("Load word2vec i file {}\n".format(FLAGS.word2vec))
 
                 item = 0
-                with open(FLAGS.word2vec, "rb") as f:
-                    header = f.readline()
-                    vocab_size, layer1_size = map(int, header.split())
-                    binary_len = np.dtype('float32').itemsize * layer1_size
-                    for line in xrange(vocab_size):
-                        word = []
-                        while True:
-                            ch = f.read(1)
-                            if ch == ' ':
-                                word = ''.join(word)
-                                break
-                            if ch != '\n':
-                                word.append(ch)
-                        idx = 0
-                        if word in vocabulary_item:
-                            item = item + 1
-                            idx = vocabulary_item[word]
-                            initW[idx] = np.fromstring(f.read(binary_len), dtype='float32')
-                        else:
-                            f.read(binary_len)
+                with open(FLAGS.word2vec, "r") as f:
+                    for line in f:
+                         word_and_vec = line.split(' ')
+                         idx = 0
+                         if word_and_vec[0] in vocabulary_user:
+                             print(u)
+                             u += 1
+                             idx = vocabulary_user[word_and_vec[0]]
+                             initW[idx] = np.asarray(word_and_vec[1:])
+                    #header = f.readline()
+                    #vocab_size, layer1_size = map(int, header.split())
+                    #binary_len = np.dtype('float32').itemsize * layer1_size
+                    #for line in xrange(vocab_size):
+                    #    word = []
+                    #    while True:
+                    #        ch = f.read(1)
+                    #        if ch == ' ':
+                    #            word = ''.join(word)
+                    #            break
+                    #        if ch != '\n':
+                    #            word.append(ch)
+                    #    idx = 0
+                    #    if word in vocabulary_item:
+                    #        item = item + 1
+                    #        idx = vocabulary_item[word]
+                    #        initW[idx] = np.fromstring(f.read(binary_len), dtype='float32')
+                    #    else:
+                    #        f.read(binary_len)
 
                 sess.run(deep.W2.assign(initW))
 
@@ -228,13 +248,18 @@ if __name__ == '__main__':
 
             data_size_train = len(train_data)
             data_size_test = len(test_data)
+            print("test size")
+            print(data_size_test)
             batch_size = 8
             ll = int(len(train_data) / batch_size)
 
-            for epoch in range(40):
+            print('Stating epoch training')
+            for epoch in range(15):
                 # Shuffle the data at each epoch
                 shuffle_indices = np.random.permutation(np.arange(data_size_train))
                 shuffled_data = train_data[shuffle_indices]
+                #print("epoch")
+                #print(epoch)
                 for batch_num in range(ll):
                     start_index = batch_num * batch_size
                     end_index = min((batch_num + 1) * batch_size, data_size_train)
@@ -266,8 +291,11 @@ if __name__ == '__main__':
                         for batch_num2 in range(ll_test):
                             start_index = batch_num2 * batch_size
                             end_index = min((batch_num2 + 1) * batch_size, data_size_test)
-                            data_test = test_data[start_index:end_index]
-
+                            #print(end_index)
+                            #print(start_index)
+                            #print(test_data.shape())
+                            data_test = test_data[start_index: end_index]
+                          
                             userid_valid, itemid_valid, y_valid = zip(*data_test)
 
                             u_valid = []
@@ -319,6 +347,13 @@ if __name__ == '__main__':
                 print ("loss_valid {:g}, rmse_valid {:g}, mae_valid {:g}".format(loss_s / test_length,
                                                                                  np.sqrt(accuracy_s / test_length),
                                                                                  mae_s / test_length))
+                if (epoch == 0):
+                    fh = open('result.txt', 'w')
+                else:
+                    fh = open('result.txt', 'a')
+                fh.write('rmse ' + str(rmse))
+                fh.write('mae ' + str(mae))
+                fh.close()
                 rmse = np.sqrt(accuracy_s / test_length)
                 mae = mae_s / test_length
                 if best_rmse > rmse:
@@ -326,6 +361,9 @@ if __name__ == '__main__':
                 if best_mae > mae:
                     best_mae = mae
                 print("")
+            fh = open('result.txt', 'a')
+            fh.write(best_rmse)
+            fh.write(best_mae)
             print('best rmse:', best_rmse)
             print('best mae:', best_mae)
 

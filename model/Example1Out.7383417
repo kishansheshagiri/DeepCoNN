@@ -1,0 +1,56 @@
+/scratch/user/manamakhilbabu/anaconda/envs/py27670/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+2018-04-15 02:52:02.970105: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX
+WARNING:tensorflow:From /scratch/user/manamakhilbabu/anaconda/envs/py27670/lib/python2.7/site-packages/tensorflow/python/util/tf_should_use.py:107: initialize_all_variables (from tensorflow.python.ops.variables) is deprecated and will be removed after 2017-03-02.
+Instructions for updating:
+Use `tf.global_variables_initializer` instead.
+User defined signal 2
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@gpu256-3009>
+Subject: Job 7383417: <JobExample1> in cluster <Main_Compute> Exited
+
+Job <JobExample1> was submitted from host <login3> by user <manamakhilbabu> in cluster <Main_Compute>.
+Job was executed on host(s) <gpu256-3009>, in queue <sn_regular>, as user <manamakhilbabu> in cluster <Main_Compute>.
+</home/manamakhilbabu> was used as the home directory.
+</scratch/user/manamakhilbabu/RecCoNN/model> was used as the working directory.
+Started at Sun Apr 15 02:51:01 2018
+Results reported on Sun Apr 15 04:51:06 2018
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+##NECESSARY JOB SpECIFICATIONS
+#BSUB -J JobExample1
+#BSUB -L /bin/bash
+#BSUB -W 2:00
+#BSUB -n 1
+#BSUB -R "span[ptile=1]"
+#BSUB -R "rusage[mem=150000]"
+#BSuB -M 150000
+#BSUB -o Example1Out.%J
+
+cd $SCRATCH
+cd RecCoNN/model/
+source activate py27670
+python train.py
+
+------------------------------------------------------------
+
+TERM_RUNLIMIT: job killed after reaching LSF run time limit.
+Exited with exit code 140.
+
+Resource usage summary:
+
+    CPU time :                                   104971.77 sec.
+    Max Memory :                                 1292 MB
+    Average Memory :                             1188.65 MB
+    Total Requested Memory :                     150000.00 MB
+    Delta Memory :                               148708.00 MB
+    Max Swap :                                   2 MB
+    Max Processes :                              4
+    Max Threads :                                45
+
+The output (if any) is above this job summary.
+

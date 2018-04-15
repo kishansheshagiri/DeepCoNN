@@ -1,0 +1,63 @@
+2018-04-15 02:05:19.831114: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX
+WARNING:tensorflow:From /scratch/user/manamakhilbabu/anaconda/lib/python3.6/site-packages/tensorflow/python/util/tf_should_use.py:107: initialize_all_variables (from tensorflow.python.ops.variables) is deprecated and will be removed after 2017-03-02.
+Instructions for updating:
+Use `tf.global_variables_initializer` instead.
+
+Parameters:
+
+Loading data...
+Tensor("fm/Sum:0", shape=(?, 1), dtype=float32)
+Tensor("fm/add_1:0", shape=(?, 1), dtype=float32)
+Load word2vec u file ../data/glove.6B.100d.txt
+
+Traceback (most recent call last):
+  File "train.py", line 159, in <module>
+    word_and_vec = line.decode('utf-8').split(' ')
+AttributeError: 'str' object has no attribute 'decode'
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@gpu256-3009>
+Subject: Job 7383397: <JobExample1> in cluster <Main_Compute> Exited
+
+Job <JobExample1> was submitted from host <login3> by user <manamakhilbabu> in cluster <Main_Compute>.
+Job was executed on host(s) <gpu256-3009>, in queue <sn_regular>, as user <manamakhilbabu> in cluster <Main_Compute>.
+</home/manamakhilbabu> was used as the home directory.
+</scratch/user/manamakhilbabu/RecCoNN/model> was used as the working directory.
+Started at Sun Apr 15 02:04:34 2018
+Results reported on Sun Apr 15 02:05:22 2018
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+##NECESSARY JOB SpECIFICATIONS
+#BSUB -J JobExample1
+#BSUB -L /bin/bash
+#BSUB -W 2:00
+#BSUB -n 1
+#BSUB -R "span[ptile=1]"
+#BSUB -R "rusage[mem=150000]"
+#BSuB -M 150000
+#BSUB -o Example1Out.%J
+
+cd $SCRATCH
+cd RecCoNN/model/
+python train.py
+
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   5.30 sec.
+    Max Memory :                                 551 MB
+    Average Memory :                             88.14 MB
+    Total Requested Memory :                     150000.00 MB
+    Delta Memory :                               149449.00 MB
+    Max Swap :                                   1 MB
+    Max Processes :                              4
+    Max Threads :                                5
+
+The output (if any) is above this job summary.
+
