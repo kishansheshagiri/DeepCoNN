@@ -20,9 +20,9 @@ import pickle
 import DeepCoNN
 
 tf.flags.DEFINE_string("word2vec", "../data/glove.6B.100d.txt", "Word2vec file with pre-trained embeddings (default: None)")
-tf.flags.DEFINE_string("valid_data","../data/yelp/yelp.test", " Data for validation")
-tf.flags.DEFINE_string("para_data", "../data/yelp/yelp.para", "Data parameters")
-tf.flags.DEFINE_string("train_data", "../data/yelp/yelp.train", "Data for training")
+tf.flags.DEFINE_string("valid_data","../data/data_kishan/yelp.test", " Data for validation")
+tf.flags.DEFINE_string("para_data", "../data/data_kishan/yelp.para", "Data parameters")
+tf.flags.DEFINE_string("train_data", "../data/data_kishan/yelp.train", "Data for training")
 
 # ==================================================
 
@@ -35,8 +35,8 @@ tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability ")
 tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularizaion lambda")
 tf.flags.DEFINE_float("l2_reg_V", 0, "L2 regularizaion V")
 # Training parameters
-tf.flags.DEFINE_integer("batch_size",8, "Batch Size ")
-tf.flags.DEFINE_integer("num_epochs", 40, "Number of training epochs ")
+tf.flags.DEFINE_integer("batch_size",32, "Batch Size ")
+tf.flags.DEFINE_integer("num_epochs", 15, "Number of training epochs ")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after this many steps ")
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps ")
 # Misc Parameters
@@ -198,7 +198,7 @@ if __name__ == '__main__':
                          word_and_vec = line.split(' ')
                          idx = 0
                          if word_and_vec[0] in vocabulary_user:
-                             print(u)
+                             #print(u)
                              u += 1
                              idx = vocabulary_user[word_and_vec[0]]
                              initW[idx] = np.asarray(word_and_vec[1:])
@@ -351,19 +351,19 @@ if __name__ == '__main__':
                     fh = open('result.txt', 'w')
                 else:
                     fh = open('result.txt', 'a')
-                fh.write('rmse ' + str(rmse))
-                fh.write('mae ' + str(mae))
-                fh.close()
                 rmse = np.sqrt(accuracy_s / test_length)
                 mae = mae_s / test_length
+                fh.write("rmse " + str(rmse))
+                fh.write("mae " + str(mae))
+                fh.close()
                 if best_rmse > rmse:
                     best_rmse = rmse
                 if best_mae > mae:
                     best_mae = mae
                 print("")
             fh = open('result.txt', 'a')
-            fh.write(best_rmse)
-            fh.write(best_mae)
+            fh.write(str(best_rmse))
+            fh.write(str(best_mae))
             print('best rmse:', best_rmse)
             print('best mae:', best_mae)
 
