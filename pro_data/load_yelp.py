@@ -13,15 +13,49 @@ import json
 import pandas as pd
 import pickle
 import numpy as np
+from operator import add
+
 TPS_DIR = '../data/yelp'
-TP_file = os.path.join(TPS_DIR, 'restaurant_review.json')
+TP_file = os.path.join(TPS_DIR, 'state_restaurant_review.json')
+SR_file = os.path.join('../data', 'state_restaurants.json')
 
 f= open(TP_file)
 users_id=[]
 items_id=[]
 ratings=[]
 reviews=[]
+attributes=[]
 np.random.seed(2017)
+
+sr_attr = dict()
+sr_attr_set = set()
+with open(SR_file) as sr_f:
+    for line in sr_f:
+        js = json.loads(line)
+        cat = js["categories"]
+        state_attr = cat
+        js_attr = js["attributes"]
+        if js_attr.get("Alcohol") and js_attr["Alcohol"] != "none":
+            state_attr.append("Alcohol")
+        if js_attr.get("OutdoorSeating") and js_attr["OutdoorSeating"] == True:
+            state_attr.append("OutdoorSeating")
+        if js_attr.get("RestaurantsDelivery") and js_attr["RestaurantsDelivery"] == True:
+            state_attr.append("RestaurantsDelivery")
+        if js_attr.get("RestaurantsTakeOut") and js_attr["RestaurantsTakeOut"] == True:
+            state_attr.append("RestaurantsTakeOut")
+        if js_attr.get("BusinessParking") and js_attr["BusinessParking"]["valet"] == True:
+            state_attr.append("Valet")
+
+        sr_attr_set.update(state_attr)
+        sr_attr[js["business_id"]] = state_attr
+
+sr_attr_list = sorted(sr_attr_set)
+business_attributes = dict()
+for sr, value in sr_attr.iteritems():
+    attribute = [0] * len(sr_attr_list)
+    for attr in value:
+        attribute[sr_attr_list.index(attr)] = 1
+    business_attributes[sr] = attribute
 
 for index, line in enumerate(f):
     #print(index) 
@@ -38,10 +72,13 @@ for index, line in enumerate(f):
     users_id.append(str(js['user_id'])+',')
     items_id.append(str(js['business_id'])+',')
     ratings.append(str(js['stars']))
+    attributes.append(business_attributes[js['business_id']])
+
 data=pd.DataFrame({'user_id':pd.Series(users_id),
                    'item_id':pd.Series(items_id),
                    'ratings':pd.Series(ratings),
-                   'reviews':pd.Series(reviews)})[['user_id','item_id','ratings','reviews']]
+                   'reviews':pd.Series(reviews),
+                   'attr':pd.Series(attributes)})[['user_id','item_id','ratings','reviews', 'attr']]
 
 def get_count(tp, id):
     playcount_groupbyid = tp[[id, 'ratings']].groupby(id, as_index=False)
@@ -117,7 +154,9 @@ tp_test.to_csv(os.path.join(TPS_DIR, 'yelp_test.csv'), index=False,header=None)
 user_reviews={}
 item_reviews={}
 user_rid={}
+user_attr={}
 item_rid={}
+item_attr={}
 #print(type(data))
 iter=0
 for i in data.values:
@@ -127,15 +166,18 @@ for i in data.values:
     if i[0] in user_reviews.keys():
         user_reviews[i[0]].append(i[3])
         user_rid[i[0]].append(i[1])
+        user_attr[i[0]] = map(add, user_attr[i[0]], i[4])
     else:
         user_rid[i[0]]=[i[1]]
         user_reviews[i[0]]=[i[3]]
+        user_attr[i[0]]=i[4]
     if i[1] in item_reviews.keys():
         item_reviews[i[1]].append(i[3])
         item_rid[i[1]].append(i[0])
     else:
         item_reviews[i[1]] = [i[3]]
         item_rid[i[1]]=[i[0]]
+        item_attr[i[1]]=i[4]
     iter += 1
 #print(data.values)
 #print("Item review keys")
@@ -149,6 +191,8 @@ pickle.dump(user_reviews, open(os.path.join(TPS_DIR, 'user_review'), 'wb'))
 pickle.dump(item_reviews, open(os.path.join(TPS_DIR, 'item_review'), 'wb'))
 pickle.dump(user_rid, open(os.path.join(TPS_DIR, 'user_rid'), 'wb'))
 pickle.dump(item_rid, open(os.path.join(TPS_DIR, 'item_rid'), 'wb'))
+pickle.dump(user_attr, open(os.path.join(TPS_DIR, 'user_attr'), 'wb'))
+pickle.dump(item_attr, open(os.path.join(TPS_DIR, 'item_attr'), 'wb'))
 
 usercount, itemcount = get_count(data, 'user_id'), get_count(data, 'item_id')
 
