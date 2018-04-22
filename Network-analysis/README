@@ -1,3 +1,7 @@
 
 Use modify.py to convert local Json to CSV files
 Use network.py to create Graph datastructure and plotting corresponding top users plots.
+
+ Based on visualizations we observed that Yelp essentially has two classes of users: 
+    class 1 - uses Yelp purely to look for food/entertainment but do not engage in the social networking much. 
+    class 2 - exhibits the power law, has many friends, and treats yelp as a social network so mainly relying on their network of friends to recommend them Restaurants, along with other interactions.
