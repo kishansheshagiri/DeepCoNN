@@ -1,1 +1,3 @@
 
+Use modify.py to convert local Json to CSV files
+Use network.py to create Graph datastructure and plotting corresponding top users plots.
