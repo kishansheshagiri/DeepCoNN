@@ -16,7 +16,7 @@ import tensorflow as tf
 
 class DeepCoNN(object):
     def __init__(
-            self, user_length,item_length, num_classes, user_vocab_size,item_vocab_size,fm_k,n_latent,user_num,item_num,
+            self, uf_length, user_length,item_length, num_classes, user_vocab_size,item_vocab_size,fm_k,n_latent,user_num,item_num,
             embedding_size, filter_sizes, num_filters, l2_reg_lambda=0.0,l2_reg_V=0.0):
         # A placeholder is simply a variable that we will assign data to at a later date. It allows us to create our operations and build our computation graph, without needing the data.
         self.input_u = tf.placeholder(tf.int32, [None, user_length], name="input_u")
@@ -25,6 +25,7 @@ class DeepCoNN(object):
         self.input_uid = tf.placeholder(tf.int32, [None, 1], name="input_uid")
         self.input_iid = tf.placeholder(tf.int32, [None, 1], name="input_iid")
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob")
+        self.input_uf = tf.placeholder(tf.float32, [None, uf_length], name="input_uf")
 
         l2_loss = tf.constant(0.0)
 
@@ -113,7 +114,16 @@ class DeepCoNN(object):
                 shape=[num_filters_total, n_latent],
                 initializer=tf.contrib.layers.xavier_initializer())
             bu = tf.Variable(tf.constant(0.1, shape=[n_latent]), name="bu")
-            self.u_fea=tf.matmul(self.h_drop_u, Wu) + bu
+            
+            W = tf.get_variable("W", shape=[n_latent+10, n_latent], initializer=tf.contrib.layers.xavier_initializer())
+            b = tf.Variable(tf.constant(0.1, shape=[n_latent]), name="b")
+
+            var = tf.cast(self.input_uf, tf.float32)
+            Wfeat1 = tf.get_variable("Wfeat1", shape=[uf_length, 10], initializer=tf.contrib.layers.xavier_initializer())
+            bfeat1 = tf.Variable(tf.constant(0.1, shape=[10], name="bfeat1")) 
+            var1 = tf.nn.relu(tf.matmul(var, Wfeat1) + bfeat1)           
+
+            self.u_fea = tf.matmul(tf.concat([tf.matmul(self.h_drop_u, Wu) + bu, var1], 1), W) + b
             #self.u_fea = tf.nn.dropout(self.u_fea,self.dropout_keep_prob)
             Wi = tf.get_variable(
                 "Wi",
