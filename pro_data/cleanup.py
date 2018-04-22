@@ -3,27 +3,29 @@
 import json
 import os.path
 
-states = ["PA"]
+TP_DIR = '../data'
+B_file = os.path.join(TP_DIR, 'business.json')
+R_file = os.path.join(TP_DIR, 'restaurants.json')
+REV_file = os.path.join(TP_DIR, 'review.json')
+RREV_file = os.path.join(TP_DIR, 'restaurant_review.json')
 
 def write_restaurants():
     restaurant_categories = ["Restaurants", "Coffee", "Food", "Cafes", "Nightlife", "Bars", "Juice Bars & Smoothies"]
-    with open('business.json', 'r') as yelp_business:
-        if os.path.exists('state_restaurants.json'):
-            print("State restaurant file exists.")
+    with open(B_file, 'r') as yelp_business:
+        if os.path.exists(R_file):
             return
 
-        yelp_restaurant_file = open('state_restaurants.json', 'w')
+        yelp_restaurant_file = open(R_file, 'w')
         yelp_restaurant_file.close()
         for line in yelp_business:
             json_line = json.loads(line)
-            if any(item in json_line["categories"] for item in restaurant_categories)\
-                    and any(state == json_line["state"] for state in states):
-                with open('state_restaurants.json', 'a') as yelp_restaurant_file:
+            if any(item in json_line["categories"] for item in restaurant_categories):
+                with open(R_file, 'a') as yelp_restaurant_file:
                     yelp_restaurant_file.write(line)
 
 def get_business_list():
     restaurants = []
-    with open('state_restaurants.json', 'r') as yelp_restaurant_file:
+    with open(R_file, 'r') as yelp_restaurant_file:
         for line in yelp_restaurant_file:
             json_line = json.loads(line)
             restaurants.append(json_line['business_id'])
@@ -31,16 +33,16 @@ def get_business_list():
     return restaurants
 
 def write_reviews(restaurants):
-    with open('yelp/restaurant_review.json', 'r') as yelp_reviews:
-        if os.path.exists('yelp/state_restaurant_review.json'):
+    with open(REV_file, 'r') as yelp_reviews:
+        if os.path.exists(RREV_file):
             return
 
-        yelp_restaurant_file = open('yelp/state_restaurant_review.json', 'w')
+        yelp_restaurant_file = open(RREV_file, 'w')
         yelp_restaurant_file.close()
         for line in yelp_reviews:
             json_line = json.loads(line)
             if json_line['business_id'] in restaurants:
-                with open('yelp/state_restaurant_review.json', 'a') as yelp_restaurant_file:
+                with open(RREV_file, 'a') as yelp_restaurant_file:
                     yelp_restaurant_file.write(line)
 
 def main():

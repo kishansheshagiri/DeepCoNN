@@ -1,0 +1,23 @@
+Analysis of graph Top 10 Users Graph
+Number of nodes: 5859
+Number of edges: 11057
+Average degree:   3.7744
+Diameter: 4
+
+Analysis of graph Top 100 Users Graph
+Number of nodes: 17104
+Number of edges: 94994
+Average degree:  11.1078
+Diameter: 6
+
+Analysis of graph Top 1000 Users Graph
+Number of nodes: 17104
+Number of edges: 94994
+Average degree:  11.1078
+
+All users Graph
+Number of nodes: 30255
+Number of edges: 151516
+Average degree:  10.0159
+
+
