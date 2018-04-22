@@ -166,7 +166,7 @@ for i in data.values:
         print(iter)
         print("Data")
         print(len(data))
-    if i[0] in user_reviews.keys():
+    if user_reviews.has_key(i[0]):
         user_reviews[i[0]].append(i[3])
         user_rid[i[0]].append(i[1])
         user_attr[i[0]] = map(add, user_attr[i[0]], i[4])
@@ -174,7 +174,7 @@ for i in data.values:
         user_rid[i[0]]=[i[1]]
         user_reviews[i[0]]=[i[3]]
         user_attr[i[0]]=i[4]
-    if i[1] in item_reviews.keys():
+    if item_reviews.has_key(i[1]):
         item_reviews[i[1]].append(i[3])
         item_rid[i[1]].append(i[0])
     else:
