@@ -20,9 +20,9 @@ import pickle
 import DeepCoNN
 
 tf.flags.DEFINE_string("word2vec", "../data/glove.6B.100d.txt", "Word2vec file with pre-trained embeddings (default: None)")
-tf.flags.DEFINE_string("valid_data","../data/data_kishan/yelp.test", " Data for validation")
-tf.flags.DEFINE_string("para_data", "../data/data_kishan/yelp.para", "Data parameters")
-tf.flags.DEFINE_string("train_data", "../data/data_kishan/yelp.train", "Data for training")
+tf.flags.DEFINE_string("valid_data","../data/yelp/penn/yelp.test", " Data for validation")
+tf.flags.DEFINE_string("para_data", "../data/yelp/penn/yelp.para", "Data parameters")
+tf.flags.DEFINE_string("train_data", "../data/yelp/penn/yelp.train", "Data for training")
 
 # ==================================================
 
@@ -35,7 +35,7 @@ tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability ")
 tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularizaion lambda")
 tf.flags.DEFINE_float("l2_reg_V", 0, "L2 regularizaion V")
 # Training parameters
-tf.flags.DEFINE_integer("batch_size",32, "Batch Size ")
+tf.flags.DEFINE_integer("batch_size", 32, "Batch Size ")
 tf.flags.DEFINE_integer("num_epochs", 15, "Number of training epochs ")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after this many steps ")
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps ")

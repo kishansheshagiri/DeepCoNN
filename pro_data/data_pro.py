@@ -16,11 +16,11 @@ import tensorflow as tf
 import csv
 import os
 import pickle
-tf.flags.DEFINE_string("valid_data","../data/yelp/yelp_valid.csv", " Data for validation")
-tf.flags.DEFINE_string("test_data", "../data/yelp/yelp_test.csv", "Data for testing")
-tf.flags.DEFINE_string("train_data", "../data/yelp/yelp_train.csv", "Data for training")
-tf.flags.DEFINE_string("user_review", "../data/yelp/user_review", "User's reviews")
-tf.flags.DEFINE_string("item_review", "../data/yelp/item_review", "Item's reviews")
+tf.flags.DEFINE_string("valid_data","../data/yelp/penn/kishan/yelp_valid.csv", " Data for validation")
+tf.flags.DEFINE_string("test_data", "../data/yelp/penn/kishan/yelp_test.csv", "Data for testing")
+tf.flags.DEFINE_string("train_data", "../data/yelp/penn/kishan/yelp_train.csv", "Data for training")
+tf.flags.DEFINE_string("user_review", "../data/yelp/penn/kishan/user_review", "User's reviews")
+tf.flags.DEFINE_string("item_review", "../data/yelp/penn/kishan/item_review", "Item's reviews")
 def clean_str(string):
     """
     Tokenization/string cleaning for all datasets except for SST.
@@ -239,7 +239,7 @@ def batch_iter(data, batch_size, num_epochs, shuffle=True):
             yield shuffled_data[start_index:end_index]
 
 if __name__ == '__main__':
-    TPS_DIR = '../data/yelp'
+    TPS_DIR = '../data/yelp/penn/kishan'
     FLAGS = tf.flags.FLAGS
     FLAGS._parse_flags()
 

@@ -14,10 +14,12 @@ import pandas as pd
 import pickle
 import numpy as np
 from operator import add
+from sklearn.decomposition import NMF
 
 TPS_DIR = '../data/yelp'
-TP_file = os.path.join(TPS_DIR, 'state_restaurant_review.json')
-SR_file = os.path.join('../data', 'state_restaurants.json')
+TP_file = os.path.join(TPS_DIR, 'review.json')
+SR_file = os.path.join('../data/yelp', 'business.json')
+OUP_DIR = "../data/yelp/all"
 
 f= open(TP_file)
 users_id=[]
@@ -147,9 +149,9 @@ test_idx[test] = True
 
 tp_test = tp_1[test_idx]
 tp_valid = tp_1[~test_idx]
-tp_train.to_csv(os.path.join(TPS_DIR, 'yelp_train.csv'), index=False,header=None)
-tp_valid.to_csv(os.path.join(TPS_DIR, 'yelp_valid.csv'), index=False,header=None)
-tp_test.to_csv(os.path.join(TPS_DIR, 'yelp_test.csv'), index=False,header=None)
+tp_train.to_csv(os.path.join(OUP_DIR, 'yelp_train.csv'), index=False,header=None)
+tp_valid.to_csv(os.path.join(OUP_DIR, 'yelp_valid.csv'), index=False,header=None)
+tp_test.to_csv(os.path.join(OUP_DIR, 'yelp_test.csv'), index=False,header=None)
 
 user_reviews={}
 item_reviews={}
@@ -160,9 +162,10 @@ item_attr={}
 #print(type(data))
 iter=0
 for i in data.values:
-    print(iter)
-    print("Data")
-    print(len(data))
+    if (iter%100000==0):
+        print(iter)
+        print("Data")
+        print(len(data))
     if i[0] in user_reviews.keys():
         user_reviews[i[0]].append(i[3])
         user_rid[i[0]].append(i[1])
@@ -187,12 +190,24 @@ print(item_reviews[11])
 #print(data.values)
 #print(len(data.values))
 #storing the files in respective files
-pickle.dump(user_reviews, open(os.path.join(TPS_DIR, 'user_review'), 'wb'))
-pickle.dump(item_reviews, open(os.path.join(TPS_DIR, 'item_review'), 'wb'))
-pickle.dump(user_rid, open(os.path.join(TPS_DIR, 'user_rid'), 'wb'))
-pickle.dump(item_rid, open(os.path.join(TPS_DIR, 'item_rid'), 'wb'))
-pickle.dump(user_attr, open(os.path.join(TPS_DIR, 'user_attr'), 'wb'))
-pickle.dump(item_attr, open(os.path.join(TPS_DIR, 'item_attr'), 'wb'))
+
+## NMF on the user_attr list
+#user_attr_mat = np.array(user_attr.values())
+#model = NMF(n_components=8, init='random', random_state=0)
+#uattr_topwise = model.fit_transform(user_attr_mat)
+#print uattr_topwise
+#print uattr_topwise.shape
+#i = 0
+#for key in user_attr.keys():
+#    user_attr[key] = uattr_topwise[i,:]
+#    i += 1
+
+pickle.dump(user_reviews, open(os.path.join(OUP_DIR, 'user_review'), 'wb'))
+pickle.dump(item_reviews, open(os.path.join(OUP_DIR, 'item_review'), 'wb'))
+pickle.dump(user_rid, open(os.path.join(OUP_DIR, 'user_rid'), 'wb'))
+pickle.dump(item_rid, open(os.path.join(OUP_DIR, 'item_rid'), 'wb'))
+pickle.dump(user_attr, open(os.path.join(OUP_DIR, 'user_attr'), 'wb'))
+pickle.dump(item_attr, open(os.path.join(OUP_DIR, 'item_attr'), 'wb'))
 
 usercount, itemcount = get_count(data, 'user_id'), get_count(data, 'item_id')
 
