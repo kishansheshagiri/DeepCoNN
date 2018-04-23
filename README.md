@@ -8,6 +8,10 @@ Two models:
 
 2、DeepCoNN+attributes: Appended User reviews with additional attributes informations relavent to that review.
 
+Network Analysis:
+
+1. Created Heterogeneous Information Network (HIN) and analysed the percentage of users depending on their friends recommendations. Also In future, we would like additional algorithms to add Edge weights based on different relations among nodes. We hope including these edge weights in the Loss function may imporve the results.
+
 ## Environments
 
 - python 2.7
