@@ -1,28 +1,12 @@
-# DeepCoNN
+# RecCoNN
 
-This is our implementation for the paper:
-
-
-*Lei Zheng, Vahid Noroozi, and Philip S Yu. 2017. Joint deep modeling of users and items using reviews for recommendation.
-In WSDM. ACM, 425-434.*
-
+This is our implementation for the Information Retrievel Course Project. We have extended DeepCoNN architecture proposed by Lei Zheng et. al. in Jan 2017 which is the state-of-the-art method that utilizes deep learning technology to jointly model user and item from textual reviews.
 
 Two models:
 
-1、DeepCoNN: This is the state-of-the-art method that uti-lizes deep learning technology to jointly model user and itemfrom textual reviews.
+1、RecCoNN: Included additional User Profile specific features.
 
-2、DeepCoNN++: We extend DeepCoNN by changing its share layer from FM to our neural prediction layer.
-
-
-The two methods are used as the baselines of our method **NARRE** in the paper:
-
-
-*Chong Chen, Min Zhang, Yiqun Liu, and Shaoping Ma. 2018. [Neural Attentional Rating Regression with Review-level Explanations.](http://www.thuir.cn/group/~YQLiu/publications/WWW2018_CC.pdf) 
-In WWW'18.*
-
-**Please cite our WWW'18 paper if you use our codes. Thanks!**
-
-Author: Chong Chen (cstchenc@163.com)
+2、DeepCoNN+attributes: Appended User reviews with additional attributes informations relavent to that review.
 
 ## Environments
 
@@ -34,23 +18,26 @@ Author: Chong Chen (cstchenc@163.com)
 
 ## Dataset
 
-In our experiments, we use the datasets from  Amazon 5-core(http://jmcauley.ucsd.edu/data/amazon) and Yelp Challenge 2017(https://www.yelp.com/dataset_challenge).
+Yelp Challenge 2017(https://www.yelp.com/dataset_challenge).
 
 ## Example to run the codes		
 
 Data preprocessing:
 
 ```
-python loaddata.py	
+python cleanup.py
+python cleanup_state.py
+python load_yelp.py	
 python data_pro.py
 ```
 
 Train and evaluate the model:
 
 ```
-python train.py
+python train_wuf.py      [This is for DecCoNN with attributes appended to the users reviews]
+python train_waatr.py    [This is for RecCoNN]
 ```
 
 
 
-Last Update Date: Jan 3, 2018
+Last Update Date: Apr 23, 2018
