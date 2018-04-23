@@ -10,7 +10,7 @@ Two models:
 
 Network Analysis:
 
-1. Created Heterogeneous Information Network (HIN) and analysed the percentage of users depending on their friends recommendations. Also in future, we would like to think about additional algorithms to add Edge weights based on different relations among nodes. We hope including these edge weights in the Loss function may imporve the results.
+1. Created Heterogeneous Information Network (HIN) and analysed the percentage of users depending on their friends recommendations. Also in future, we would like to think about additional algorithms to add Edge weights based on different relations among nodes. We hope including these edge weights in the Loss function may improve the results.
 
 ## Environments
 
