@@ -1,0 +1,102 @@
+Evaluation:
+1000
+loss_valid 61.3812, rmse_valid 1.10888, mae_valid 0.897098
+0:
+
+
+Evaluation:
+train:rmse,mae: 1.15155070369 0.927552947627
+loss_valid 60.1963, rmse_valid 1.09811, mae_valid 0.877844
+
+
+Evaluation:
+1000
+loss_valid 59.3548, rmse_valid 1.0904, mae_valid 0.854535
+1:
+
+
+Evaluation:
+train:rmse,mae: 1.05625125899 0.840664941957
+loss_valid 60.0066, rmse_valid 1.09639, mae_valid 0.853202
+
+
+Evaluation:
+1000
+loss_valid 61.7786, rmse_valid 1.11245, mae_valid 0.853974
+2:
+
+
+Evaluation:
+train:rmse,mae: 1.03992035033 0.825730042581
+loss_valid 59.7947, rmse_valid 1.09432, mae_valid 0.849586
+
+
+Evaluation:
+1000
+loss_valid 60.1028, rmse_valid 1.09709, mae_valid 0.869381
+3:
+
+
+Evaluation:
+train:rmse,mae: 1.03185491599 0.818530487081
+loss_valid 59.0138, rmse_valid 1.08722, mae_valid 0.851004
+
+
+Evaluation:
+1000
+loss_valid 59.0749, rmse_valid 1.0877, mae_valid 0.850739
+4:
+
+
+Evaluation:
+train:rmse,mae: 1.02736829014 0.814168885689
+loss_valid 59.7169, rmse_valid 1.0936, mae_valid 0.851324
+
+
+Evaluation:
+1000
+loss_valid 60.4087, rmse_valid 1.10009, mae_valid 0.847261
+5:
+
+
+Evaluation:
+train:rmse,mae: 1.02075961967 0.808569912156
+loss_valid 59.113, rmse_valid 1.08813, mae_valid 0.85376
+
+
+Evaluation:
+1000
+loss_valid 59.5037, rmse_valid 1.09167, mae_valid 0.849855
+6:
+
+
+Evaluation:
+train:rmse,mae: 1.01584517337 0.80361902947
+loss_valid 59.2859, rmse_valid 1.08964, mae_valid 0.854247
+
+
+Evaluation:
+1000
+loss_valid 62.4736, rmse_valid 1.11847, mae_valid 0.908867
+7:
+
+
+Evaluation:
+train:rmse,mae: 1.01784898402 0.804638269492
+loss_valid 60.2283, rmse_valid 1.0982, mae_valid 0.880082
+
+
+Evaluation:
+1000
+loss_valid 60.0779, rmse_valid 1.09691, mae_valid 0.851676
+8:
+
+
+Evaluation:
+train:rmse,mae: 1.01384332779 0.801445981174
+loss_valid 59.4273, rmse_valid 1.09094, mae_valid 0.858166
+
+
+Evaluation:
+1000
+loss_valid 59.5309, rmse_valid 1.09191, mae_valid 0.853565

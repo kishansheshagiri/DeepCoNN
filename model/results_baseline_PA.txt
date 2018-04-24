@@ -1,0 +1,99 @@
+Training start:
+0:
+
+
+Evaluation:
+train:rmse,mae: 1.14440241941 0.920581239254
+loss_valid 64.6177, rmse_valid 1.13749, mae_valid 0.862533
+
+1:
+
+
+Evaluation:
+train:rmse,mae: 1.03273038157 0.820592853496
+loss_valid 56.6229, rmse_valid 1.0651, mae_valid 0.849198
+
+
+2:
+
+
+Evaluation:
+train:rmse,mae: 1.00714634761 0.797866633534
+loss_valid 56.4413, rmse_valid 1.06324, mae_valid 0.837052
+
+3:
+
+
+Evaluation:
+train:rmse,mae: 0.997764747988 0.788964521261
+loss_valid 56.7786, rmse_valid 1.06651, mae_valid 0.840674
+
+4:
+
+
+Evaluation:
+train:rmse,mae: 0.990160313942 0.78212917953
+loss_valid 56.3274, rmse_valid 1.06223, mae_valid 0.832396
+
+5:
+
+
+Evaluation:
+train:rmse,mae: 0.98540097385 0.778171210234
+loss_valid 60.199, rmse_valid 1.09805, mae_valid 0.838424
+
+6:
+
+
+Evaluation:
+train:rmse,mae: 0.984736038433 0.777900052417
+loss_valid 57.3289, rmse_valid 1.07174, mae_valid 0.864578
+
+7:
+
+
+Evaluation:
+train:rmse,mae: 0.982734154962 0.776382008541
+loss_valid 56.4184, rmse_valid 1.06314, mae_valid 0.832241
+
+8:
+
+
+Evaluation:
+train:rmse,mae: 0.979930679951 0.773136757695
+loss_valid 55.6599, rmse_valid 1.05595, mae_valid 0.825209
+
+9:
+
+
+Evaluation:
+train:rmse,mae: 0.975384321254 0.768905700916
+loss_valid 56.3484, rmse_valid 1.0625, mae_valid 0.826658
+
+10:
+
+
+Evaluation:
+train:rmse,mae: 0.974557012181 0.768631308994
+loss_valid 55.8058, rmse_valid 1.05741, mae_valid 0.828062
+
+11:
+
+
+Evaluation:
+train:rmse,mae: 0.972805260642 0.767009890149
+loss_valid 56.0491, rmse_valid 1.05967, mae_valid 0.831239
+
+12:
+
+
+Evaluation:
+train:rmse,mae: 0.971517090811 0.766420865683
+loss_valid 56.3712, rmse_valid 1.06271, mae_valid 0.834682
+
+13:
+
+
+Evaluation:
+train:rmse,mae: 0.970038725956 0.764328237259
+loss_valid 55.9078, rmse_valid 1.05832, mae_valid 0.825432

@@ -1,0 +1,16 @@
+Training start:
+
+Evaluation:
+1000
+loss_valid 73.3761, rmse_valid 1.21165, mae_valid 0.949138
+
+Evaluation:
+2000
+loss_valid 72.8367, rmse_valid 1.2072, mae_valid 0.937492
+
+Evaluation:
+3000
+loss_valid 70.1739, rmse_valid 1.1849, mae_valid 0.962828
+
+Evaluation:
+4000
