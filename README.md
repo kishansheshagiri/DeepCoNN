@@ -31,8 +31,10 @@ Data preprocessing:
 ```
 python cleanup.py
 python cleanup_state.py
-python load_yelp.py	
-python data_pro.py
+python load_yelp.py	     [This is for DeepCoNN and RecCoNN (wuf)]
+python data_pro.py       [This is for DeepCoNN and RecCoNN (wuf)]
+python load_yelp_wattr.py[This is for DeepCoNN with attribute (wattr)]
+python data_pro_wattr.py [This is for DeepCoNN with attribute (wattr)]
 ```
 
 Train and evaluate the model:
